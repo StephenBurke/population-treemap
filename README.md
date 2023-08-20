@@ -12,4 +12,4 @@ Create a `config.py` file and add your key as a variable as so
 API_KEY = 'YOUR_API_KEY'
 ```
 
-## Teriffic!! Now you're as far as I am!
+## Terrific!! Now you're as far as I am!
