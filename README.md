@@ -23,7 +23,7 @@ API_KEY = 'YOUR_API_KEY'
 In a terminal create and start a python virtual environment from your local machine
 
 ```terminal
-\path\to\population-treemap> python -m venv venv
+\path\to\population-treemap> python3 -m venv venv
 \path\to\population-treemap> .\venv\Scripts\activate
 ```
 
