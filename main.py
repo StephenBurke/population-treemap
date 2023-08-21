@@ -1,30 +1,33 @@
 import requests
 
 
-def fetch_census_data(api_key, endpoint, params):
-    base_url = "https://api.census.gov/data/2020/dec/pl"
+def fetch_census_population_data(api_key, state_code=None):
+    base_url = "https://api.census.gov/data/2020/dec"
+    endpoint = "p1"
 
-    # Add the API key to the parameters
-    params['key'] = api_key
+    params = {
+        "get": "NAME,POP",
+        "for": "state" if not state_code else f"state:{state_code}",
+        "key": api_key
+    }
 
-    # Make the request
     response = requests.get(f"{base_url}/{endpoint}", params=params)
-
-    # Check the response status
     response.raise_for_status()
 
     return response.json()
 
 
 if __name__ == "__main__":
-    API_KEY = "YOUR_API_KEY_HERE"  # Replace with your actual API key
-    # Adjust according to the specific data table or endpoint you're interested in
-    ENDPOINT = "P1"
-    PARAMS = {
-        "get": "NAME",  # Columns or fields you want to retrieve
-        "for": "state:*"  # Geographic filters or other conditions
-    }
+    from config import API_KEY
 
-    data = fetch_census_data(API_KEY, ENDPOINT, PARAMS)
-    for row in data:
-        print(row)
+    # Fetch data for all states (no specific state code provided)
+    data = fetch_census_population_data(API_KEY)
+
+    # Print the data in a readable format
+    header = data[0]
+    for row in data[1:]:
+        print(f"{row[0]}: {row[1]} population")
+
+    # If you want data for a specific state, you can use its code. For example, for California:
+    # ca_data = fetch_census_population_data(API_KEY, state_code="06")
+    # print(f"{ca_data[1][0]}: {ca_data[1][1]} population")
